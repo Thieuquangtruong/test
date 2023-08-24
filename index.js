@@ -1,11 +1,16 @@
-const express = require("express");
-const { connectToDb, db } = require("./db");
-
+const express = require('express');
+const router = require('./routers');
 const app = express();
-const router = require("./router");
-app.use("/router", router);
+const PORT = 3000;
+const dotenv = require('dotenv');
+const { connectToDB } = require('./database');
 
-app.listen(3000, () => {
-  console.log("App is running at 3000");
-  connectToDb();
+dotenv.config();
+app.use(express.json());
+
+connectToDB(); // connect to database
+app.use(router);
+
+app.listen(PORT, () => {
+    console.log(`listen on port ${PORT}`);
 });
